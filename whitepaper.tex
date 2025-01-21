@@ -1,0 +1,214 @@
+\documentclass[14pt, a4paper, twoside, openany, dvipsnames]{extreport}
+\usepackage[parfill]{parskip}
+\usepackage[english]{babel}
+\usepackage[scaled]{helvet}
+\usepackage{pdfpages}
+\usepackage{ragged2e}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, left=2.7cm, right=2.5cm, top=2.5cm, bottom=2cm, showframe=false]{geometry}
+\raggedbottom
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+    colorlinks=false,
+    linkcolor=black
+    }
+
+
+\usepackage[outline]{contour}
+\usepackage{csquotes}
+\usepackage{listings}
+
+% the following removes hyphenation
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000 
+
+\let\olditemize=\itemize \let\endolditemize=\enditemize \renewenvironment{itemize}{\olditemize \itemsep-0.75em}{\endolditemize}
+
+
+\renewcommand{\familydefault}{\sfdefault}
+
+
+% this was annoying to get
+\definecolor{whitepaper_purple}{RGB}{255,0,255}
+\definecolor{duco_orange}{HTML}{ff4112}
+\definecolor{duco_white}{HTML}{fafafa}
+\definecolor{sun_yellow}{HTML}{ffb412}
+\definecolor{duco_magenta}{HTML}{f31291}
+\definecolor{duco_dark}{HTML}{121212}
+\definecolor{whitepaper_gray}{HTML}{999999}
+\definecolor{revox_gray}{HTML}{666666}
+\definecolor{duco_blue}{HTML}{4278d6}
+\definecolor{duco_red}{HTML}{990000}
+\definecolor{duco_gold}{HTML}{bf9000}
+\definecolor{duco_green}{HTML}{38761d}
+\definecolor{code_green}{HTML}{79a367}
+
+\lstdefinestyle{mystyle}{
+    commentstyle=\color{revox_gray},
+    keywordstyle=\color{sun_yellow},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    keywords={,for, to, if, equals, Math},
+    comment=[l]{//},
+    identifierstyle=\color{code_green},
+    classoffset=1,
+        otherkeywords={receive_job,sha1,init,send_result},
+        morekeywords={receive_job,sha1,init,send_result},
+        keywordstyle=\color{duco_red},
+    classoffset=2,
+        otherkeywords={nonce,difficulty,floor},
+        morekeywords={nonce,difficulty,floor},
+        keywordstyle=\color{black},
+    classoffset=0,
+}
+
+\lstset{style=mystyle}
+
+\contourlength{0.1pt}
+\contournumber{10}%
+
+\newcommand{\bold}[2]{\textbf{\textcolor{#1}{\contour{#1}{#2}}}}
+\newcommand{\semibold}[2]{\textbf{\textcolor{#1}{#2}}}
+\catcode`_=12 % so we can use the underscore outside of math mode
+
+\begin{document}
+
+\includegraphics[scale=1.18]{include/ducobanner.png}
+\begin{raggedleft}
+    \LARGE \bold{whitepaper_purple}{Whitepaper} \\[0.1cm]
+    \small \textcolor{whitepaper_purple}{rev. 8} \\[0.3cm]
+\end{raggedleft}
+
+\large \bold{sun_yellow}{Robert \enquote{revox} Piotrowski} \\
+\normalsize \textcolor{revox_gray}{robert@piotrowsky.dev} \\
+\textcolor{whitepaper_gray}{duinocoin.com | piotrowsky.dev}
+
+\begin{justify}
+\section*{\bold{sun_yellow}{What is Duino-Coin?}}
+Duino-Coin is a transparent, centralized, eco-friendly coin that focuses on mining with low-powered devices - especially with \textcolor{duco_blue}{Arduino}, \textcolor{duco_red}{ESP8266/32} and \textcolor{whitepaper_purple}{Raspberry Pi} boards, while also allowing PCs and many other hardware configurations to earn coins. \textcolor{duco_orange}{DUCO} (short for Duino-Coin) tries to achieve a reward system which low-power devices benefit the most.
+
+\section*{\bold{sun_yellow}{Technical specifications}}
+\vspace*{-5pt}
+\begin{tabular}[l]{p{0.3\linewidth}p{0.7\linewidth}}
+\hspace*{-8pt} Algorithms & DUCO-S1 \\ % this is a dirty hack lol
+\hspace*{-8pt} Supply & Infinite \scriptsize(with burning)\\
+\hspace*{-8pt} Transactions & Instant \\
+\hspace*{-8pt} Decimals & up to 20 \\
+\hspace*{-8pt} Rewards & distributed by the original \enquote{Kolka system} \\
+\hspace*{-8pt} Ticker & DUCO (?) \\
+\hspace*{-8pt} Supported Devices & CPUs, GPUs, smart TVs, smartphones, older feature phones, \textcolor{duco_blue}{Arduinos}, \textcolor{duco_red}{ESP8266}, \textcolor{duco_red}{ESP32}, \textcolor{whitepaper_purple}{Raspberry Pis}, \textcolor{duco_orange}{Orange Pis}, \textcolor{duco_gold}{Banana Pis}, etc.
+\end{tabular}
+
+\newpage
+\section*{\bold{sun_yellow}{Form}}
+We're trying to create the official Duino-Coin softwares to be as accessible as possible. Encountering problems, ambiguity or insufficient documentation is a common sight in quite a lot of projects, especially those that focus on cryptography; what's more - most of them are copies of each other which can lead to confusion. Duino's focus has been on creating an easy to use environment for every newcomer in the cryptocurrency world since the beginning.
+
+\section*{\bold{sun_yellow}{Uniqueness}}
+Like all modern coins, Duino-Coin has instant transactions, global availability and is open-source. We place great emphasis on cost effectiveness and being written from scratch - implementing its own ideas where possible. \\
+It should be noted that in the current form Duino is mostly a for-fun project, but it's expanding greatly in the last few months and profits can be made thanks to a few exchanges that already support DUCO.
+
+\section*{\bold{sun_yellow}{Mining}}
+The Duino-Coin algorithm (DUCO-S1) is based on the \textcolor{duco_green}{SHA1} hash chain. Each miner is being rewarded for each mined share that is based on the previous one. \\
+The miner asks for the job from one of the nodes and receives an expected hash, the hash of the last block, and a difficulty. The miner needs to find a valid nonce (that is always within the range of the given difficulty), which gets appended to the last block hash so that after hashing it again, it produces the expected hash. \\
+When a valid hash is found, the miner submits the nonce result to the node. The server then takes care of the results and rewards by calculating them with the \textcolor{duco_red}{Kolka} system. \\
+This pseudocode demonstrates the simplest implementation of the process: %
+% I swear I have no idea what I'm doing
+\vspace{3pt}
+\begin{lstlisting}[escapeinside={<@}{@>}]
+last_block_hash, expected_hash, difficulty = receive_job
+temporary_hash = sha1.init(last_block_hash)
+for nonce = 0 to difficulty * 100
+    current_hash = <@\textcolor{duco_red}{temporary_hash}.\textcolor{duco_red}{update}(nonce)@>
+    if <@\textcolor{black}{current_hash}@> equals <@\textcolor{black}{expected_hash}@>
+        // Resulting nounce gets found
+        send_result
+\end{lstlisting}
+
+\section*{\bold{sun_yellow}{Rewards}}
+The system that takes care of the rewards, named \textit{\textcolor{duco_red}{Kolka}}—an inside joke from \textit{\textcolor{duco_red}{Coca Cola}}—is designed in such a way to make the low-powered devices earn almost as much as powerful ones. It encourages the use of eco-friendly equipment, such as development boards, which are the main focus of Duino-Coin
+
+\section*{\bold{sun_yellow}{Efficiency drop}}
+In order to prevent people from creating huge mining farms, which disallow \enquote{regular} users to mine, we've come up with a system called Kolka efficiency drop, which causes each additional miner to earn a bit less than the previous one. The formula for it is \textit{last_miner_efficiency * 100 - drop\%}, the drop for AVRs and ESPs is 4\%, and for PCs it is 20\%.
+
+\section*{\bold{sun_yellow}{Centralization}}
+Making Arduinos and other low-powered devices not only profitable, but just possible, would be impossible to maintain if the coin was decentralized. Since the coin is meant to be mostly a fun project for all, it's better to keep a few good servers running than a whole network, which would be really hard to maintain. Storing stuff inside a secure server also ensures the funds won't be lost.
+
+\section*{\bold{sun_yellow}{Decentralization}}
+Users wanting to store their funds in a decentralized way can wrap their Duino-Coins (and vice-versa) directly from their wallet. Duino-Coins can be wrapped to exist on the Tron, Binance Smart Chain, Celo or Matic blockchains.
+
+\newpage
+\section*{\bold{sun_yellow}{Features of Kolka}}
+Other than having rules which miners have to follow (see Terms of Service), here are some of the main methods Kolka utilizes:
+\begin{itemize}
+    \item Kolka V1 (introduced around March 2020):
+    \begin{itemize}
+        \item have separate difficulties for AVR, ESP, and PC mining
+        \item make the rewards dependent on (but not only):
+        \begin{itemize}
+            \item hashrate used to find a share
+            \item time it took to find a share
+            \item number of shares submitted in a period of time
+            \item amount of workers mining on an account
+            \item used difficulty
+            \item randomness
+        \end{itemize}
+    \end{itemize}
+    \item Kolka V2 (introduced around June 2020):
+    \begin{itemize}
+        \item everything from the previous point, with addition of:
+        \item throttling fast miners (those, who exceed max shares per some period of time)
+        \item checking for hashrate on difficulties (for example, AVR boards won't make more than 200 H/s) and rejecting shares which come from suspicious miners
+    \end{itemize}
+    \item Kolka V3 (introduced in March 2021):
+    \begin{itemize}
+        \item everything from the previous points, with addition of:
+        \item variable difficulty dependent on sharetime
+        \begin{itemize}
+            \item if the sharetime was faster than the expected sharetime, raise the difficulty with the help of this formula:
+\begin{lstlisting}[escapeinside={<@}{@>}]
+difficulty = Math.floor((hashrate / 100) * expectedSharetime) 
+           * (1 <@$\pm$@> hashrateScalingFactor)
+\end{lstlisting}
+            \item automatically moving miner to the correct difficulty tier if it's too low or too high
+        \end{itemize}
+    \end{itemize}
+    \item Kolka V4 (introduced around May 2021):
+    \begin{itemize}
+        \item everything from the previous points, with addition of:
+        \item reporting unique IDs of AVR and ESP chips to the server for verification
+    \end{itemize}
+\end{itemize}
+This system essentially ensures that the miner is using the correct difficulty for his equipment and is being rewarded fairly.
+\newpage
+\section*{\bold{sun_yellow}{Exchanges}}
+\textbf{DUCO Exchange} (official, DUCO):\\ \url{https://exchange.duinocoin.com/} \\
+\textbf{SunSwap} (wDUCO):\\ \url{https://sunswap.com/#/scan/detail/TWYaXdxA12JywrUdou3PFD1fvx2PWjqK9U} \\
+\textbf{SushiSwap} (maticDUCO):\\ \url{https://sushi.com} \\
+\textbf{UbeSwap} (celoDUCO):\\ \url{https://info.ubeswap.org/pair/0x7703874bd9fdacceca5085eae2776e276411f171} \\
+\textbf{PancakeSwap} (bscDUCO):\\ \url{https://pancakeswap.finance/swap?inputCurrency=0xcf572ca0ab84d8ce1652b175e930292e2320785b}
+
+\section*{\bold{sun_yellow}{Sources and useful links}}
+Website: \url{https://duinocoin.com}\\
+GitHub: \url{https://github.com/revoxhere/duino-coin}\\
+Explorer \& Network stats: \url{https://explorer.duinocoin.com}\\
+Online (Web) Wallet: \url{https://wallet.duinocoin.com}\\
+Discord server: \url{https://discord.gg/kvBkccy}\\
+FAQ: \url{https://github.com/revoxhere/duino-coin/wiki/FAQ}\\
+
+\textbf{Thank you for reading this document.} \\
+We hope we convinced you to take a look at our project.
+\\[0.5cm]
+\small
+\textcolor{sun_yellow}{Duino-Coin project 2019-\the\year}
+\end{justify}
+\end{document}
